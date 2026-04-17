@@ -1,5 +1,8 @@
 .section .text
-
+.globl make_node
+.globl insert
+.globl get
+.globl getAtMost
 make_node:
 addi sp,sp,-16 # making space to store return address and val on stack
 sd ra,8(sp) # store return address on stack
