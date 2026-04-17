@@ -1,8 +1,11 @@
 .section .rodata
 fmt:
 .string "%d "
+fmt2:
+.string "%d"
 fmt1:
 .string "\n"
+
 .section .text
 .globl main
 # given integers, which are 32 bit (word)
@@ -94,7 +97,8 @@ j loop2
 
 exit:
 li s1,0 # i=0;
-loop4: beq s1,s0,final
+addi t0,s0,-1
+loop4: beq s1,t0,last_element
 slli s3,s1,2 # offset
 add s3,s2,s3 # result address=base+offset
 lla a0,fmt
@@ -102,6 +106,13 @@ lw a1,0(s3)
 call printf
 addi s1,s1,1
 j loop4
+
+last_element:
+slli s3,s1,2 # offset
+add s3,s2,s3 # result address=base+offset
+lla a0,fmt2
+lw a1,0(s3)
+call printf
 
 final:
 lla a0,fmt1
@@ -113,3 +124,4 @@ ld s2,16(sp)
 ld s3,8(sp)
 addi sp,sp,48
 ret
+
